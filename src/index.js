@@ -7,12 +7,7 @@ function showTemperature(response) {
   let windSpeedElement = document.querySelector("#wind-speed");
   let timeElement = document.querySelector("#time");
 
-  alert(response.data.time);
   let date = new Date(response.data.time * 1000);
-
-  alert(date);
-
-  console.log(response.data);
 
   cityElement.innerHTML = response.data.city;
   temperatureElement.innerHTML = temperature;
@@ -51,19 +46,23 @@ function formatDate(date) {
   return `${day} ${hours}:${minutes}`;
 }
 
-function search(event) {
-  event.preventDefault();
-  let searchInputElement = document.querySelector("#search-input");
-  let city = searchInputElement.value;
-
+function search(city) {
   let apiKey = "6fc8fd70e1ab2886foa6073df7b4t203";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-
   axios.get(apiUrl).then(showTemperature);
 }
 
+function handleSearch(event) {
+  event.preventDefault();
+  let searchInputElement = document.querySelector("#search-input");
+  //let city = searchInputElement.value;
+  search(searchInputElement.value);
+}
+
 let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", search);
+searchForm.addEventListener("submit", handleSearch);
+
+search("Manila");
 
 //let currentDateELement = document.querySelector("#current-date");
 //let currentDate = new Date();
